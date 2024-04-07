@@ -46,7 +46,7 @@ data_agent = Agent(
 
 def python_task(task):
     return Task(
-    description=f"Write Python code to aid in answering the user's question or command: {task}",
+    description=f"Write and run Python code to aid in answering the user's question or command: {task}",
     expected_output="""Python code that performs the specified task, interacting with the database using psycopg2.
      The code should return None if no output is expected, or the output of the task if it is expected.""",
     agent=swe_agent
