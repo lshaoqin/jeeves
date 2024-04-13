@@ -6,6 +6,9 @@ from crewai_tools import (
 )
 from dotenv import load_dotenv
 from langchain_community.llms import Ollama
+from langchain.agents import tool
+from langchain_community.utilities import SQLDatabase
+from langchain_experimental.utilities import PythonRepl
 
 # To Load Local models through Ollama
 llm_model = Ollama(model="gemma:2b")
@@ -26,10 +29,18 @@ db_agent = Agent(
 
 swe_agent = Agent(
     role = "Software Engineer",
-    goal = "Write efficient and bug free code in Python and run SQL queries using psycopg2",
+    goal = "Write efficient and bug free code in Python",
     backstory="""
-    You are a software engineer tasked with writing code in Python.
+    You are a software engineer at a large company. You are tasked with writing quality code in Python.
     """,
+    tools = [docs_tool, file_tool, csv_tool],
+    llm = llm_model
+)
+
+qa_agent = Agent(
+    role = "Quality Assurance Engineer",
+    goal = "Test the code written by the software engineer to ensure it is bug free",
+    backstory="""You are a quality assurance engineer at a large company. You are tasked with testing and running the code written by the software engineer.""",
     tools = [docs_tool, file_tool, csv_tool],
     llm = llm_model
 )
