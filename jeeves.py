@@ -1,11 +1,10 @@
 from crewai import Agent, Task, Crew, Process
 from crewai_tools import (
-    DirectoryReadTool,
     FileReadTool,
     CSVSearchTool
 )
 from dotenv import load_dotenv
-from langchain_community.llms import Ollama
+# from langchain_community.llms import Ollama
 from langchain.agents import Tool
 from langchain.sql_database import SQLDatabase
 from langchain.agents.agent_toolkits.sql.toolkit import SQLDatabaseToolkit
@@ -16,7 +15,7 @@ import os
 
 db = SQLDatabase(db_connect())
 
-llm_model = ChatOpenAI(model_name=os.getenv("OPENAI_MODEL_NAME"), temperature=0) # Ollama(model="gemma:2b")
+llm_model = ChatOpenAI(model_name=os.getenv("OPENAI_MODEL_NAME"), temperature=0) # Ollama(model="llama:7b")
 
 file_tool = FileReadTool(file_path='documents/schema.txt')
 csv_tool = CSVSearchTool()
